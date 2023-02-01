@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "44590268831",
+    "project_id": "lechonk-fc8a5",
+    "storage_bucket": "lechonk-fc8a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44590268831:android:3f1e3e66570c540e16bdaa",
+        "android_client_info": {
+          "package_name": "com.example.geodude"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44590268831-uimdopdubfcp0u1obnuvcamvhlt73sdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSIsx6oMqJ1sVse8l_zKZnoynVg9qHjfA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44590268831-uimdopdubfcp0u1obnuvcamvhlt73sdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
