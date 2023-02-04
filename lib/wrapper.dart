@@ -1,5 +1,6 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:random_avatar/random_avatar.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -222,11 +223,17 @@ class _WrapperState extends State<Wrapper> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            // backgroundColor: Colors.white,
-                            backgroundColor: Color(0xFF161927),
-                            radius: 24.0,
-                              child: Image.asset('assets/images/discord2.png')
+                          // CircleAvatar(
+                          //   // backgroundColor: Colors.white,
+                          //   backgroundColor: Color(0xFF161927),
+                          //   radius: 24.0,
+                          //     child: Image.asset('assets/images/discord2.png')
+                          // ),
+                          randomAvatar(
+                            FirebaseAuth.instance.currentUser!.uid.toString(),
+                            // DateTime.now().toIso8601String(),
+                            height: 48,
+                            width: 48,
                           ),
                           SizedBox(height: 16.0),
                           Container(

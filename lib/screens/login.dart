@@ -28,7 +28,7 @@ class _LoginState extends State<Login> {
 
   void login() async {
 
-    if(_emailController.text.isEmpty){
+    if(_emailController.text.trim().isEmpty){
       final snackBar = SnackBar(
         /// need to set following properties for best effect of awesome_snackbar_content
         elevation: 0,
@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
       return ;
     }
 
-    if(_passwordController.text.isEmpty){
+    if(_passwordController.text.trim().isEmpty){
       final snackBar = SnackBar(
         /// need to set following properties for best effect of awesome_snackbar_content
         elevation: 0,
@@ -76,8 +76,8 @@ class _LoginState extends State<Login> {
 
     try {
       await _auth.signInWithEmailAndPassword(
-          email: _emailController.text.toString(),
-          password: _passwordController.text.toString()
+          email: _emailController.text.trim().toString(),
+          password: _passwordController.text.trim().toString()
       );
 
       final snackBar = await SnackBar(
@@ -128,14 +128,57 @@ class _LoginState extends State<Login> {
     CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
 
     void signup() async {
+
+      if(_emailController.text.trim().isEmpty){
+        final snackBar = SnackBar(
+          /// need to set following properties for best effect of awesome_snackbar_content
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          content: AwesomeSnackbarContent(
+            title: 'Snap !!',
+            message: 'Fill the email field',
+            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+            contentType: ContentType.failure,
+          ),
+        );
+
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(snackBar);
+
+        return ;
+      }
+
+      if(_passwordController.text.trim().isEmpty){
+        final snackBar = SnackBar(
+          /// need to set following properties for best effect of awesome_snackbar_content
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          content: AwesomeSnackbarContent(
+            title: 'Snap !!',
+            message: 'Fill the password field',
+            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+            contentType: ContentType.failure,
+          ),
+        );
+
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(snackBar);
+
+        return ;
+      }
+
       setState(() {
         _loading = true;
       });
 
       try {
         final UserCredential user = await _auth.createUserWithEmailAndPassword(
-          email: _emailController.text.toString(),
-          password: _passwordController.text.toString(),
+          email: _emailController.text.trim().toString(),
+          password: _passwordController.text.trim().toString(),
         );
 
         final snackBar = await SnackBar(
@@ -157,7 +200,7 @@ class _LoginState extends State<Login> {
 
         await usersRef.doc(user.user?.uid).set({
           'uid': user.user?.uid,
-          'email': _emailController.text.toString(),
+          'email': _emailController.text.trim().toString(),
           'notebooks': [],
           'bills': [],
           'cards': [],
@@ -333,6 +376,7 @@ class _LoginState extends State<Login> {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
+                          fontFamily: 'Montserrat_400'
                       ),
                       onSubmitted: (value) {
                         // getData();
@@ -392,6 +436,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.0,
+                        fontFamily: 'Montserrat_400'
                     ),
                   ),
                 ),

@@ -314,6 +314,27 @@ class _AddNotebookState extends State<AddNotebook> {
                                       child: InkWell(
                                         onTap: () {
 
+                                          if(_categoryController.text.trim() == ""){
+                                            final snackBar = SnackBar(
+                                              /// need to set following properties for best effect of awesome_snackbar_content
+                                              elevation: 0,
+                                              behavior: SnackBarBehavior.floating,
+                                              backgroundColor: Colors.transparent,
+                                              content: AwesomeSnackbarContent(
+                                                title: 'Snap !!',
+                                                message: 'Empty field detected !',
+                                                /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                                contentType: ContentType.failure,
+                                              ),
+                                            );
+
+                                            ScaffoldMessenger.of(context)
+                                              ..hideCurrentSnackBar()
+                                              ..showSnackBar(snackBar);
+
+                                            return ;
+                                          }
+
                                           if(categoryList.contains(_categoryController.text.toString())){
                                             final snackBar = SnackBar(
                                               /// need to set following properties for best effect of awesome_snackbar_content
@@ -337,10 +358,10 @@ class _AddNotebookState extends State<AddNotebook> {
                                           List<Categories> newarr = _list;
                                           List<String> xrr = categoryList;
                                           newarr.add(Categories(
-                                              name: _categoryController.text
+                                              name: _categoryController.text.trim()
                                                   .toString(),
                                               showCross: true));
-                                          xrr.add(_categoryController.text
+                                          xrr.add(_categoryController.text.trim()
                                               .toString());
                                           setState(() {
                                             _list = newarr;
@@ -377,7 +398,7 @@ class _AddNotebookState extends State<AddNotebook> {
                               child: InkWell(
                                 onTap: () {
 
-                                  if(_nameController.text.isEmpty){
+                                  if(_nameController.text.trim().isEmpty){
                                     final snackBar = SnackBar(
                                       /// need to set following properties for best effect of awesome_snackbar_content
                                       elevation: 0,
@@ -404,14 +425,14 @@ class _AddNotebookState extends State<AddNotebook> {
                                           .instance.currentUser?.uid
                                           .toString())
                                       .collection('notebooks')
-                                      .doc('${_nameController.text.toString()}')
+                                      .doc('${_nameController.text.trim().toString()}')
                                       .set({
-                                    'id': _nameController.text.toString(),
+                                    'id': _nameController.text.trim().toString(),
                                     'categories': categoryList,
                                     'createdAt': Timestamp.now(),
                                     'description':
-                                        _descriptionController.text.toString(),
-                                    'name': _nameController.text.toString(),
+                                        _descriptionController.text.trim().toString(),
+                                    'name': _nameController.text.trim().toString(),
                                     'transactions': [],
                                   });
 
@@ -422,12 +443,16 @@ class _AddNotebookState extends State<AddNotebook> {
                                           .toString())
                                       .update({
                                     "notebooks": FieldValue.arrayUnion(
-                                        [_nameController.text.toString()])
+                                        [_nameController.text.trim().toString()])
                                   });
 
                                   _categoryController.clear();
                                   _nameController.clear();
                                   _descriptionController.clear();
+
+
+                                  Navigator.pop(context);
+
                                 },
                                 child: Container(
                                   height: 56,

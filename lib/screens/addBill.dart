@@ -105,6 +105,7 @@ class _AddBillState extends State<AddBill> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16.0,
+                                    fontFamily: 'Montserrat_400'
                                 ),
                               ),
                             ),
@@ -150,6 +151,7 @@ class _AddBillState extends State<AddBill> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16.0,
+                                    fontFamily: 'Montserrat_400'
                                 ),
                               ),
                             ),
@@ -236,7 +238,7 @@ class _AddBillState extends State<AddBill> {
                                 ),
                                 onTap: () {
 
-                                  if(_billNameController.text.isEmpty){
+                                  if(_billNameController.text.trim().isEmpty){
                                     final snackBar = SnackBar(
                                       /// need to set following properties for best effect of awesome_snackbar_content
                                       elevation: 0,
@@ -256,7 +258,7 @@ class _AddBillState extends State<AddBill> {
                                     return ;
                                   }
 
-                                  if(_amountController.text.isEmpty){
+                                  if(_amountController.text.trim().isEmpty){
                                     final snackBar = SnackBar(
                                       /// need to set following properties for best effect of awesome_snackbar_content
                                       elevation: 0,
@@ -276,6 +278,27 @@ class _AddBillState extends State<AddBill> {
                                     return ;
                                   }
 
+                                  RegExp regex = new RegExp(r'^[1-9][0-9]*(\.[0-9]{1,2})?$');
+
+                                  if (!regex.hasMatch(_amountController.text)) {
+                                    final snackBar = SnackBar(
+                                      /// need to set following properties for best effect of awesome_snackbar_content
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'Snap !!',
+                                        message: 'Invalid Amount !!',
+                                        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.failure,
+                                      ),
+                                    );
+
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(snackBar);
+                                    return ;
+                                  }
 
                                   var rng = new Random();
                                   int randomNumber =
@@ -287,8 +310,8 @@ class _AddBillState extends State<AddBill> {
                                       .update({
                                     'bills': FieldValue.arrayUnion([
                                       {
-                                        'name': _billNameController.text.toString(),
-                                        'amount': int.parse(_amountController.text.toString()),
+                                        'name': _billNameController.text.trim().toString(),
+                                        'amount': int.parse(_amountController.text.trim().toString()),
                                         'createdAt': Timestamp.now(),
                                         'dueDate': _dueDate,
                                         'id': randomNumber,
@@ -318,6 +341,9 @@ class _AddBillState extends State<AddBill> {
                                   ScaffoldMessenger.of(context)
                                     ..hideCurrentSnackBar()
                                     ..showSnackBar(snackBar);
+
+                                  Navigator.pop(context);
+
                                 },
                               ),
                             )

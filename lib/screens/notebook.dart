@@ -1266,7 +1266,7 @@ class _NotebookState extends State<Notebook> {
                                       child: InkWell(
                                         onTap: () {
 
-                                          if(_amountController.text.isEmpty || _descriptionController.text.isEmpty || _reasonController.text.isEmpty || (_category == '')){
+                                          if(_amountController.text.trim().isEmpty || _reasonController.text.trim().isEmpty || (_category == '')){
                                             final snackBar = SnackBar(
                                               /// need to set following properties for best effect of awesome_snackbar_content
                                               elevation: 0,
@@ -1286,15 +1286,38 @@ class _NotebookState extends State<Notebook> {
                                             return ;
                                           }
 
+                                          // Pattern pattern = r'^\d+(\.\d{1,2})?$';
+                                          RegExp regex = new RegExp(r'^[1-9][0-9]*(\.[0-9]{1,2})?$');
+
+                                          if (!regex.hasMatch(_amountController.text)) {
+                                            final snackBar = SnackBar(
+                                              /// need to set following properties for best effect of awesome_snackbar_content
+                                              elevation: 0,
+                                              behavior: SnackBarBehavior.floating,
+                                              backgroundColor: Colors.transparent,
+                                              content: AwesomeSnackbarContent(
+                                                title: 'Snap !!',
+                                                message: 'Invalid Amount !!',
+                                                /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                                contentType: ContentType.failure,
+                                              ),
+                                            );
+
+                                            ScaffoldMessenger.of(context)
+                                              ..hideCurrentSnackBar()
+                                              ..showSnackBar(snackBar);
+                                            return ;
+                                          }
+
                                           List<dynamic> newTransactions = [
                                             {
                                               'amount': _amountController.text
                                                   .toString(),
                                               'category': _category,
                                               'description':
-                                                  _descriptionController.text
+                                                  _descriptionController.text.trim()
                                                       .toString(),
-                                              'reason': _reasonController.text
+                                              'reason': _reasonController.text.trim()
                                                   .toString(),
                                               'fulldate': Timestamp.now(),
                                             },

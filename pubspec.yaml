@@ -61,6 +61,7 @@ dependencies:
   charts_flutter: ^0.10.0
   shrink_sidemenu: ^2.0.0+2-null-safety
   iconify_flutter: ^0.0.5
+  random_avatar: ^0.0.7
 
 dev_dependencies:
   flutter_test:
