@@ -199,7 +199,7 @@ class _NotebookState extends State<Notebook> {
                                                         color: Colors.white),
                                                   ),
                                                   Text(
-                                                    '$description',
+                                                    '${description[0].toUpperCase() + description.substring(1)}',
                                                     style: TextStyle(
                                                         fontFamily:
                                                             'Montserrat_400',
@@ -243,7 +243,7 @@ class _NotebookState extends State<Notebook> {
                                                 color: Colors.white),
                                           ),
                                           Text(
-                                            'Get details of current balance here',
+                                            'Set the timeline',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat_400',
                                                 color: Colors.white),
@@ -1146,7 +1146,7 @@ class _NotebookState extends State<Notebook> {
                                           ),
                                           textAlign: TextAlign.left,
                                           keyboardType: TextInputType.number,
-
+                                          textCapitalization: TextCapitalization.sentences,
                                           // keyboardAppearance: ,
                                           style: TextStyle(
                                             fontFamily: 'Montserrat_400',
@@ -1198,7 +1198,7 @@ class _NotebookState extends State<Notebook> {
                                           ),
                                           textAlign: TextAlign.left,
                                           keyboardType: TextInputType.text,
-
+                                          textCapitalization: TextCapitalization.sentences,
                                           // keyboardAppearance: ,
                                           style: TextStyle(
                                             color: Colors.white,
@@ -1250,7 +1250,7 @@ class _NotebookState extends State<Notebook> {
                                           ),
                                           textAlign: TextAlign.left,
                                           keyboardType: TextInputType.text,
-
+                                          textCapitalization: TextCapitalization.sentences,
                                           // keyboardAppearance: ,
                                           style: TextStyle(
                                             color: Colors.white,

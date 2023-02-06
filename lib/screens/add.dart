@@ -110,7 +110,7 @@ class _AddNotebookState extends State<AddNotebook> {
                                   ),
                                   textAlign: TextAlign.left,
                                   keyboardType: TextInputType.text,
-
+                                  textCapitalization: TextCapitalization.sentences,
                                   // keyboardAppearance: ,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -159,7 +159,7 @@ class _AddNotebookState extends State<AddNotebook> {
                                   ),
                                   textAlign: TextAlign.left,
                                   keyboardType: TextInputType.text,
-
+                                  textCapitalization: TextCapitalization.sentences,
                                   // keyboardAppearance: ,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -295,7 +295,7 @@ class _AddNotebookState extends State<AddNotebook> {
                                         ),
                                         textAlign: TextAlign.left,
                                         keyboardType: TextInputType.text,
-
+                                        textCapitalization: TextCapitalization.sentences,
                                         // keyboardAppearance: ,
                                         style: TextStyle(
                                           color: Colors.white,
@@ -407,6 +407,48 @@ class _AddNotebookState extends State<AddNotebook> {
                                       content: AwesomeSnackbarContent(
                                         title: 'Snap !!',
                                         message: 'Notebook name not filled',
+                                        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.failure,
+                                      ),
+                                    );
+
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(snackBar);
+
+                                    return ;
+                                  }
+
+                                  if(_descriptionController.text.trim().isEmpty){
+                                    final snackBar = SnackBar(
+                                      /// need to set following properties for best effect of awesome_snackbar_content
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'Snap !!',
+                                        message: 'Notebook Description name not filled',
+                                        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.failure,
+                                      ),
+                                    );
+
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(snackBar);
+
+                                    return ;
+                                  }
+
+                                  if(firebasebooks.contains(_nameController.text.trim())){
+                                    final snackBar = SnackBar(
+                                      /// need to set following properties for best effect of awesome_snackbar_content
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'Snap !!',
+                                        message: 'Notebook already present, use another name !!',
                                         /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                         contentType: ContentType.failure,
                                       ),

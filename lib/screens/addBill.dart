@@ -100,7 +100,7 @@ class _AddBillState extends State<AddBill> {
                                 ),
                                 textAlign: TextAlign.left,
                                 keyboardType: TextInputType.text,
-
+                                textCapitalization: TextCapitalization.sentences,
                                 // keyboardAppearance: ,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -148,6 +148,7 @@ class _AddBillState extends State<AddBill> {
                                 ),
                                 textAlign: TextAlign.left,
                                 keyboardType: TextInputType.number,
+                                textCapitalization: TextCapitalization.sentences,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16.0,
