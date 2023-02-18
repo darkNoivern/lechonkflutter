@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../notification.dart';
+
 class AddBill extends StatefulWidget {
   const AddBill({Key? key}) : super(key: key);
 
@@ -15,7 +17,7 @@ class AddBill extends StatefulWidget {
 class _AddBillState extends State<AddBill> {
   TextEditingController _billNameController = new TextEditingController();
   TextEditingController _amountController = new TextEditingController();
-  DateTime _dueDate = DateTime.now();
+  DateTime _dueDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +197,7 @@ class _AddBillState extends State<AddBill> {
 
                                       if (dateSelected != null) {
                                         setState(() {
-                                          _dueDate = dateSelected;
+                                          _dueDate = DateTime(dateSelected.year, dateSelected.month, dateSelected.day, 23, 59, 59);
                                         });
                                       }
                                     },
@@ -319,6 +321,24 @@ class _AddBillState extends State<AddBill> {
                                       }
                                     ])
                                   });
+
+                                  DateTime scheduleTime = DateTime(_dueDate.year, _dueDate.month, _dueDate.day, 8, 0, 0);
+                                  debugPrint('Notification Scheduled for $scheduleTime');
+                                  if(DateTime.now().isBefore(scheduleTime.subtract(const Duration(days: 3)))){
+                                    debugPrint('Notification Scheduled for ${scheduleTime.subtract(const Duration(days: 3))}');
+                                    NotificationService().scheduleNotification(
+                                        title: 'Pending Bills',
+                                        body: 'Reminder: Your ${_billNameController.text.toString().trim()} is due in 3 days. Please make a payment to avoid any disruption in your service',
+                                        scheduledNotificationDateTime: scheduleTime.subtract(const Duration(days: 3)));
+                                  }
+
+                                  if(DateTime.now().isBefore(scheduleTime)) {
+                                    debugPrint('Notification Scheduled for $scheduleTime');
+                                    NotificationService().scheduleNotification(
+                                        title: 'Pending Bills',
+                                        body: 'Your ${_billNameController.text.toString().trim()} is due today. Make a payment now to avoid late fees and any interruption in service.',
+                                        scheduledNotificationDateTime: scheduleTime);
+                                  }
 
                                   _amountController.clear();
                                   _billNameController.clear();

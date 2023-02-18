@@ -9,14 +9,20 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:geodude/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 import 'firebase_options.dart';
+import 'notification.dart';
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  NotificationService().initNotification();
+  tz.initializeTimeZones();
   Stripe.publishableKey =
       'pk_test_51MTnCWSIUAFS1RWiJuTzDBROERZ3lMIw8kZ8EpkPf8OLlyv8Z9ybiVoTZe7XzmVjtsPVobKzqWICU2UP18OM9Qk900kNhaK4hD';
   runApp(const MyApp());
